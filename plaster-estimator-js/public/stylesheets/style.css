@@ -1,8 +1,77 @@
 body {
-  padding: 50px;
+  padding: 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+h1 {
+  margin: 0;
+}
+header {
+  background-color: yellow;
+  margin-top: 0;
+  margin-bottom: 2%;
+  padding-top: 10px;
+}
+.topImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mainContainer {
+  width: 80%;
+  margin: 0 auto; /* Centers the container horizontally */
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+.inputArea,
+.outputArea {
+  font-size: large;
+  width: 100%;
+  margin: 0 auto; /* Centers the container horizontally */
+
+  padding: 20px;
+  display: flex;
+  flex-direction: column; /* Stacks the elements vertically */
+  align-items: center; /* Centers elements horizontally */
+}
+
+.inputArea label,
+.inputArea button,
+.outputArea label {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 10px;
+}
+.inputArea input,
+.outputArea input {
+  display: block;
+  width: 50%;
+  max-width: 200px;
+  margin-bottom: 10px;
+}
+/* .inputArea label,
+.inputArea input {
+  font-size: 1.3em;
+} */
+@media (max-width: 480px) {
+  body {
+    background-color: red;
+  }
+  .inputArea label,
+  .inputArea input,
+  .inputArea button,
+  .outputArea label,
+  .outputArea input {
+    font-size: 1em; /* Adjust font size for smaller screens */
+    max-width: 90%; /* Ensures elements don't exceed the container width */
+    padding: 0;
+  }
+  .mainContainer {
+    width: 90%;
+    padding: 0%;
+  }
 }
