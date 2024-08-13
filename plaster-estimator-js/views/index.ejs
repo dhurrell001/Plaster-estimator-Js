@@ -11,60 +11,74 @@
       <p>Welcome to <%= title %></p>
       <div class="topImage">
         <img
-          src="\images\KRend-house.jpg"
+          src="/images/KRend-house.jpg"
           width="50%"
           height="50%"
           alt="k-rend house"
         />
       </div>
       <hr />
-      <div class="inputArea">
-        <form class="inputForm" action="/submit" method="POST">
-          <label for="lengthInput">Please enter area length (metres):</label>
-          <input
-            type="number"
-            id="lengthInput"
-            name="lengthInput"
-            step="0.01"
-            placeholder="0.00"
-          />
+      <div class="userContainer">
+        <div class="inputArea">
+          <form id="inputForm" action="/submit" method="POST">
+            <label for="lengthInput">Please enter area length (metres):</label>
+            <input
+              type="number"
+              id="lengthInput"
+              name="lengthInput"
+              step="0.01"
+              placeholder="0.00"
+            />
 
-          <label for="widthInput">Please enter area width (metres):</label>
-          <input
-            type="number"
-            id="widthInput"
-            name="widthInput"
-            step="0.01"
-            placeholder="0.00"
-          />
+            <label for="widthInput">Please enter area width (metres):</label>
+            <input
+              type="number"
+              id="widthInput"
+              name="widthInput"
+              step="0.01"
+              placeholder="0.00"
+            />
 
-          <label for="thicknessInput"
-            >Please enter plaster thickness (mm):</label
-          >
-          <input
-            type="number"
-            id="thicknessInput"
-            name="thicknessInput"
-            step="0.01"
-            placeholder="0.00"
-          />
+            <label for="thicknessInput"
+              >Please enter plaster thickness (mm):</label
+            >
+            <input
+              type="number"
+              id="thicknessInput"
+              name="thicknessInput"
+              step="0.01"
+              placeholder="0.00"
+            />
 
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-      <hr />
-      <div class="outputArea">
-        <label for="totalArea">Total Area (m²):</label>
-        <input type="text" id="totalArea" readonly />
-        <label for="plasterNeeded">Plaster needed (Kg):</label>
-        <input type="text" id="plasterNeeded" readonly />
-        <label for="contigencyNeeded">Contingency needed (Kg):</label>
-        <input type="text" id="contigencyNeeded" readonly />
-        <label for="totalPlasterNeeded">Total plaster needed (Kg):</label>
-        <input type="text" id="totalPlasterNeeded" readonly />
-        <label for="bagsRequired">Bags required:</label>
-        <input type="text" id="bagsRequired" readonly />
+            <label for="contingencyInput"
+              >Please enter plaster Contingency (%):</label
+            >
+            <input
+              type="number"
+              id="contingencyInput"
+              name="contingencyInput"
+              step="0.01"
+              placeholder="0.00"
+            />
+
+            <button id="submitButton" type="submit">Submit</button>
+          </form>
+        </div>
+        <hr />
+        <div class="outputArea">
+          <label for="totalArea">Total Area (m²):</label>
+          <input type="text" id="totalArea" readonly />
+          <label for="plasterNeeded">Plaster needed (Kg):</label>
+          <input type="text" id="plasterNeeded" readonly />
+          <label for="contingencyNeeded">Contingency needed (Kg):</label>
+          <input type="text" id="contingencyNeeded" readonly />
+          <label for="totalPlasterNeeded">Total plaster needed (Kg):</label>
+          <input type="text" id="totalPlasterNeeded" readonly />
+          <label for="bagsRequired">Bags required:</label>
+          <input type="text" id="bagsRequired" readonly />
+        </div>
       </div>
     </div>
+    <script src="\javascripts\scrips.js"></script>
   </body>
 </html>

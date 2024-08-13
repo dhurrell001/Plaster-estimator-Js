@@ -37,7 +37,9 @@ header {
   flex-direction: column; /* Stacks the elements vertically */
   align-items: center; /* Centers elements horizontally */
 }
-
+.userContainer {
+  display: flex;
+}
 .inputArea label,
 .inputArea button,
 .outputArea label {
@@ -73,5 +75,10 @@ header {
   .mainContainer {
     width: 90%;
     padding: 0%;
+  }
+}
+@media (max-width: 1625px) {
+  .userContainer {
+    display: block;
   }
 }
