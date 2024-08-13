@@ -1,6 +1,7 @@
 body {
   padding: 0px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /* font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; */
+  font-family: "Roboto", sans-serif;
 }
 
 a {
@@ -20,6 +21,10 @@ header {
   align-items: center;
   justify-content: center;
 }
+.introductionText {
+  width: 75%;
+  margin: 0 auto;
+}
 .mainContainer {
   width: 80%;
   margin: 0 auto; /* Centers the container horizontally */
@@ -30,7 +35,7 @@ header {
 .outputArea {
   font-size: large;
   width: 100%;
-  margin: 0 auto; /* Centers the container horizontally */
+  margin: 0 auto;
 
   padding: 20px;
   display: flex;
@@ -39,6 +44,7 @@ header {
 }
 .userContainer {
   display: flex;
+  justify-content: space-between;
 }
 .inputArea label,
 .inputArea button,
@@ -63,6 +69,9 @@ header {
   body {
     background-color: red;
   }
+  .userContainer {
+    display: block;
+  }
   .inputArea label,
   .inputArea input,
   .inputArea button,
@@ -77,8 +86,8 @@ header {
     padding: 0%;
   }
 }
-@media (max-width: 1625px) {
+/* @media (max-width: 1625px) {
   .userContainer {
     display: block;
   }
-}
+} */
