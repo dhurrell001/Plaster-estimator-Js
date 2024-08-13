@@ -10,13 +10,34 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
 var app = express();
+const sequelize = require("./models/sequelize");
+const Plaster = require("./models/Plaster");
+const seedDatabase = require("./models/seed");
 
-const selectPlaster = {
-  plasterName: "Multi-finish",
-  coverageKGperMMperMetre: 2,
-  bagWeight: 25,
-  plasterType: "internal",
-};
+let selectPlaster;
+
+async function fetchSelectedPlaster() {
+  try {
+    selectPlaster = await Plaster.findOne({
+      where: { plasterName: "Multi-finish" },
+    });
+    if (!selectPlaster) {
+      console.log("Plaster not found in the database.");
+      // You can set a default or handle it as needed
+      selectPlaster = {
+        plasterName: "Default",
+        coverageKGperMMperMetre: 0,
+        bagWeight: 0,
+        plasterType: "unknown",
+      };
+    }
+  } catch (error) {
+    console.error("Error fetching plaster:", error);
+  }
+}
+
+// Fetch selected plaster when starting the app
+fetchSelectedPlaster();
 // Plaster calculation functions
 function calculateArea(length, width) {
   return length * width;
@@ -26,6 +47,10 @@ function calculatePlasterNeeded(totalArea, thickness, coverageKGperMMperMetre) {
 }
 function calculateContingencyNeeded(plasterNeeded, contingencyPercentage) {
   return plasterNeeded * (contingencyPercentage / 100);
+}
+function calculateBagsNeeded(plasterNeeded, bagSize) {
+  console.log("inside bags function", Math.ceil(plasterNeeded / bagSize));
+  return Math.ceil(plasterNeeded / bagSize);
 }
 // Configure multer
 const upload = multer(); // For handling multipart/form-data
@@ -64,7 +89,10 @@ app.post("/submit", upload.none(), (req, res) => {
     contingencyPercentage
   );
   const totalPlasterNeeded = plasterNeeded + contingency;
-  const bagsRequired = Math.ceil(totalPlasterNeeded / 25); // Assuming 25kg per bag
+  const bagsRequired = calculateBagsNeeded(
+    totalPlasterNeeded,
+    selectPlaster.bagWeight
+  ); // Assuming 25kg per bag
   console.log(`inside app.js ${totalArea}, ${plasterNeeded}`);
   console.log(
     `Total Area: ${totalArea}, Plaster Needed: ${plasterNeeded}, Contingency: ${contingency}, Total Plaster Needed: ${totalPlasterNeeded}, Bags Required: ${bagsRequired}`
@@ -95,6 +123,16 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
+sequelize
+  .sync()
+  .then(() => {
+    console.log("Database & tables created!");
+    // Seed the database with initial dummy data
+    seedDatabase();
+  })
+  .catch((error) => {
+    console.error("Error creating database:", error);
+  });
 
 app.listen(3001, () => {
   console.log("Server is running on port 3001");
