@@ -13,12 +13,24 @@ var app = express();
 
 const selectPlaster = {
   plasterName: "Multi-finish",
-  coveragePerKGperMM: 2,
+  coverageKGperMMperMetre: 2,
   bagWeight: 25,
+  plasterType: "internal",
 };
+// Plaster calculation functions
+function calculateArea(length, width) {
+  return length * width;
+}
+function calculatePlasterNeeded(totalArea, thickness, coverageKGperMMperMetre) {
+  return totalArea * (coverageKGperMMperMetre * thickness);
+}
+function calculateContingencyNeeded(plasterNeeded, contingencyPercentage) {
+  return plasterNeeded * (contingencyPercentage / 100);
+}
 // Configure multer
 const upload = multer(); // For handling multipart/form-data
 // view engine setup
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
@@ -40,9 +52,17 @@ app.post("/submit", upload.none(), (req, res) => {
   const contingencyPercentage = parseFloat(req.body.contingencyInput) || 0;
 
   // Perform calculations
-  const totalArea = length * width;
-  const plasterNeeded = totalArea * thickness * 1.5;
-  const contingency = plasterNeeded * (contingencyPercentage / 100);
+  const totalArea = calculateArea(length, width);
+  const plasterNeeded = calculatePlasterNeeded(
+    totalArea,
+    thickness,
+    selectPlaster.coverageKGperMMperMetre
+  );
+
+  const contingency = calculateContingencyNeeded(
+    plasterNeeded,
+    contingencyPercentage
+  );
   const totalPlasterNeeded = plasterNeeded + contingency;
   const bagsRequired = Math.ceil(totalPlasterNeeded / 25); // Assuming 25kg per bag
   console.log(`inside app.js ${totalArea}, ${plasterNeeded}`);
