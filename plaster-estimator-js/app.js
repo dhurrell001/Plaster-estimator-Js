@@ -13,17 +13,19 @@ var app = express();
 const sequelize = require("./models/sequelize");
 const Plaster = require("./models/Plaster");
 const seedDatabase = require("./models/seed");
-
+// Variable to store the current plaster that is selected
 let selectPlaster;
 
 async function fetchSelectedPlaster() {
+  //Find the plaster entry in database using plaster name. If no result is found
+  // display message and return a default object.
   try {
     selectPlaster = await Plaster.findOne({
       where: { plasterName: "Multi-finish" },
     });
     if (!selectPlaster) {
       console.log("Plaster not found in the database.");
-      // You can set a default or handle it as needed
+      // default object returned.
       selectPlaster = {
         plasterName: "Default",
         coverageKGperMMperMetre: 0,
@@ -92,7 +94,7 @@ app.post("/submit", upload.none(), (req, res) => {
   const bagsRequired = calculateBagsNeeded(
     totalPlasterNeeded,
     selectPlaster.bagWeight
-  ); // Assuming 25kg per bag
+  );
   console.log(`inside app.js ${totalArea}, ${plasterNeeded}`);
   console.log(
     `Total Area: ${totalArea}, Plaster Needed: ${plasterNeeded}, Contingency: ${contingency}, Total Plaster Needed: ${totalPlasterNeeded}, Bags Required: ${bagsRequired}`
@@ -128,7 +130,7 @@ sequelize
   .then(() => {
     console.log("Database & tables created!");
     // Seed the database with initial dummy data
-    seedDatabase();
+    // seedDatabase();
   })
   .catch((error) => {
     console.error("Error creating database:", error);
