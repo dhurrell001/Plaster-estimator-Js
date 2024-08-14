@@ -8,6 +8,10 @@ async function seedDatabase() {
         coverageKGperMMperMetre: 2,
         bagWeight: 25,
         plasterType: "internal",
+        technicalDatasheetPDF: "path/to/technical_datasheet.pdf",
+        productDataSheetPDF: "path/to/product_data_sheet.pdf",
+        productSafetySheetPDF: "path/to/product_safety_sheet.pdf",
+        productImage: "path/to/product_image.jpg",
       },
       {
         plasterName: "Bonding Coat",
