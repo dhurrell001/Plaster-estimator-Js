@@ -64,6 +64,10 @@ header {
   max-width: 200px;
   margin-bottom: 10px;
 }
+#submitButton {
+  background-color: rgb(1, 1, 75);
+  color: white;
+}
 /* .inputArea label,
 .inputArea input {
   font-size: 1.3em;
