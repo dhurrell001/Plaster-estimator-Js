@@ -46,6 +46,14 @@
         <div class="inputArea">
           <h3><u>Input Area</u></h3>
           <form id="inputForm" action="/submit" method="POST">
+            <label for="plasterSelect">Select Plaster Type:</label>
+            <select id="plasterSelect" name="plasterSelect">
+              <% plasters.forEach(function(plaster) { %>
+              <option value="<%= plaster.id %>">
+                <%= plaster.plasterName %>
+              </option>
+              <% }); %>
+            </select>
             <label for="lengthInput">Please enter area length (metres):</label>
             <input
               type="number"
