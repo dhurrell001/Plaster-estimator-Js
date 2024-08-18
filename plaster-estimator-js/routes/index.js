@@ -10,10 +10,13 @@ router.get("/", async function (req, res, next) {
       attributes: ["id", "plasterName"], // Only fetch the necessary fields
     });
 
-    res.render("index", { title: "Plaster Calculator", plasters: plasters });
+    res.render("index", {
+      title: "MinMax Plaster Estimator",
+      plasters: plasters,
+    });
   } catch (error) {
     console.error("Error fetching plasters:", error);
-    res.render("index", { title: "Plaster Calculator", plasters: [] });
+    res.render("index", { title: "MinMax Plaster Estimator", plasters: [] });
   }
 });
 
