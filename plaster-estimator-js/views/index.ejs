@@ -49,7 +49,7 @@
             <label for="plasterSelect">Select Plaster Type:</label>
             <select id="plasterSelect" name="plasterSelect">
               <% plasters.forEach(function(plaster) { %>
-              <option value="<%= plaster.id %>">
+              <option value="<%= plaster.plasterName %>">
                 <%= plaster.plasterName %>
               </option>
               <% }); %>
@@ -111,6 +111,11 @@
           <label for="bagsRequired">Bags required:</label>
           <input type="text" id="bagsRequired" readonly />
         </div>
+      </div>
+      <div class="resourceButtonArea">
+        <button id="sdsSheet">SDS</button>
+        <button id="sdsSheet">TDS</button>
+        <button id="sdsSheet">Instructions</button>
       </div>
     </div>
     <script src="\javascripts\scrips.js"></script>
