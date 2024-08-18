@@ -14,14 +14,20 @@ const sequelize = require("./models/sequelize");
 const Plaster = require("./models/Plaster");
 const seedDatabase = require("./models/seed");
 // Variable to store the current plaster that is selected
+const {
+  calculateArea,
+  calculatePlasterNeeded,
+  calculateContingencyNeeded,
+  calculateBagsNeeded,
+} = require("./services/plasterCalculations");
 let selectPlaster;
 
-async function fetchSelectedPlaster() {
+async function fetchSelectedPlaster(plasterName) {
   //Find the plaster entry in database using plaster name. If no result is found
   // display message and return a default object.
   try {
     selectPlaster = await Plaster.findOne({
-      where: { plasterName: "Multi-finish" },
+      where: { plasterName: plasterName },
     });
     if (!selectPlaster) {
       console.log("Plaster not found in the database.");
@@ -38,22 +44,20 @@ async function fetchSelectedPlaster() {
   }
 }
 
-// Fetch selected plaster when starting the app
-fetchSelectedPlaster();
 // Plaster calculation functions
-function calculateArea(length, width) {
-  return length * width;
-}
-function calculatePlasterNeeded(totalArea, thickness, coverageKGperMMperMetre) {
-  return totalArea * (coverageKGperMMperMetre * thickness);
-}
-function calculateContingencyNeeded(plasterNeeded, contingencyPercentage) {
-  return plasterNeeded * (contingencyPercentage / 100);
-}
-function calculateBagsNeeded(plasterNeeded, bagSize) {
-  console.log("inside bags function", Math.ceil(plasterNeeded / bagSize));
-  return Math.ceil(plasterNeeded / bagSize);
-}
+// function calculateArea(length, width) {
+//   return length * width;
+// }
+// function calculatePlasterNeeded(totalArea, thickness, coverageKGperMMperMetre) {
+//   return totalArea * (coverageKGperMMperMetre * thickness);
+// }
+// function calculateContingencyNeeded(plasterNeeded, contingencyPercentage) {
+//   return plasterNeeded * (contingencyPercentage / 100);
+// }
+// function calculateBagsNeeded(plasterNeeded, bagSize) {
+//   console.log("inside bags function", Math.ceil(plasterNeeded / bagSize));
+//   return Math.ceil(plasterNeeded / bagSize);
+// }
 // Configure multer
 const upload = multer(); // For handling multipart/form-data
 // view engine setup
@@ -70,14 +74,16 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
-app.post("/submit", upload.none(), (req, res) => {
+app.post("/submit", upload.none(), async (req, res) => {
   console.log("Received request body inside app.Js:", req.body);
-
+  // extact data from request body and assign to constants.
+  const plasterName = req.body.plasterSelect;
   const length = parseFloat(req.body.lengthInput) || 0;
   const width = parseFloat(req.body.widthInput) || 0;
   const thickness = parseFloat(req.body.thicknessInput) || 0;
   const contingencyPercentage = parseFloat(req.body.contingencyInput) || 0;
-
+  // Fetch the selected plaster based on the user input
+  await fetchSelectedPlaster(plasterName);
   // Perform calculations
   const totalArea = calculateArea(length, width);
   const plasterNeeded = calculatePlasterNeeded(
