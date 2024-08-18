@@ -64,6 +64,25 @@ header {
   max-width: 200px;
   margin-bottom: 10px;
 }
+.resourceButtonArea {
+  margin-top: 2%;
+  display: flex;
+
+  /* justify-content: center; */
+  margin-left: 57%;
+  width: 100%;
+  height: 10%;
+
+  /* max-width: 600px; */
+}
+.resourceButtonArea button {
+  background-color: rgb(4, 4, 130);
+  color: white;
+  margin-left: 2%;
+  margin-right: 2%;
+  height: 3em;
+  width: 7em;
+}
 #submitButton {
   background-color: rgb(1, 1, 75);
   color: white;
